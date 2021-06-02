@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `employeedb`.`employee` (
   `department_id` INT NOT NULL,
   `job_title` VARCHAR(45) NOT NULL,
   `gender` VARCHAR(45) NOT NULL,
-  `date_of_birth` TIMESTAMP NOT NULL,
+  `date_of_birth` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`employee_id`))
 ENGINE = InnoDB;
 
