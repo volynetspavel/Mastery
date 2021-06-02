@@ -42,7 +42,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public EmployeeDto update(@PathVariable("id") @Min(value = 1) int id,
+    public EmployeeDto update(@PathVariable("id") @Min(value = 1, message = "Id must be greater than 1.") int id,
                               @RequestBody @Valid EmployeeDto employeeDto) {
         employeeDto.setId(id);
         return employeeService.update(employeeDto);
@@ -50,13 +50,13 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") @Min(value = 1) int id) {
+    public void delete(@PathVariable("id") @Min(value = 1, message = "Id must be greater than 1.") int id) {
         employeeService.delete(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public EmployeeDto findById(@PathVariable("id") @Min(value = 1) int id) {
+    public EmployeeDto findById(@PathVariable("id") @Min(value = 1, message = "Id must be greater than 1.") int id) {
         return employeeService.findById(id);
     }
 

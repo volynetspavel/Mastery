@@ -12,9 +12,9 @@ public class EmployeeValidation {
 
     public static boolean isDateOfBirthValid(LocalDate dateOfBirth) {
         LocalDate now = LocalDate.now();
-        LocalDate from = now.minusYears(AGE_FROM);
-        LocalDate to = now.minusYears(AGE_TO);
+        LocalDate toDateOfBirth = now.minusYears(AGE_FROM);
+        LocalDate fromDateOfBirth = now.minusYears(AGE_TO);
 
-        return dateOfBirth.isAfter(from) && dateOfBirth.isBefore(to);
+        return dateOfBirth.isAfter(fromDateOfBirth) && dateOfBirth.isBefore(toDateOfBirth);
     }
 }
