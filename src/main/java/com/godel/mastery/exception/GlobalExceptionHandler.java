@@ -1,5 +1,6 @@
 package com.godel.mastery.exception;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -17,15 +18,18 @@ import java.util.stream.Collectors;
  * Class for handling exceptions in specific handler classes and/or handler methods.
  */
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<String> handle(ResourceNotFoundException ex) {
+        log.error(ex.getMessage(), ex);
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<String> handle(ValidationException ex) {
+        log.error(ex.getMessage(), ex);
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
@@ -43,6 +47,7 @@ public class GlobalExceptionHandler {
                 .map(objectError -> objectError.getDefaultMessage())
                 .collect(Collectors.toList());
 
+        log.error(ex.getMessage(), ex);
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
@@ -54,10 +59,11 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<List<String>> handle(ConstraintViolationException ex) {
-        ex.printStackTrace();
         List<String> errors = ex.getConstraintViolations().stream()
                 .map(constraintViolation -> constraintViolation.getMessage())
                 .collect(Collectors.toList());
+
+        log.error(ex.getMessage(), ex);
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
@@ -65,31 +71,31 @@ public class GlobalExceptionHandler {
      * Catch exception when uri contains incorrect type of data.
      * For example, tag/7 - find tag by id, expected int, but enter string - tag/ddf.
      *
-     * @param e - MethodArgumentTypeMismatchException
+     * @param ex - MethodArgumentTypeMismatchException
      * @return - exception message with code.
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<String> handle(MethodArgumentTypeMismatchException e) {
-        e.printStackTrace();
+    public ResponseEntity<String> handle(MethodArgumentTypeMismatchException ex) {
         String errorMessage = "Incorrect parameter of request.";
+        log.error(ex.getMessage(), ex);
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     /**
      * Catch exception when LocalDate is not valid.
      *
-     * @param e - HttpMessageNotReadableException
+     * @param ex - HttpMessageNotReadableException
      * @return - exception message with code.
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<String> handle(HttpMessageNotReadableException e) {
-        e.printStackTrace();
-        return new ResponseEntity<>(e.getRootCause().getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> handle(HttpMessageNotReadableException ex) {
+        log.error(ex.getMessage(), ex);
+        return new ResponseEntity<>(ex.getRootCause().getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handle(Exception e) {
-        e.printStackTrace();
-        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<String> handle(Exception ex) {
+        log.error(ex.getMessage(), ex);
+        return new ResponseEntity<>(ex.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

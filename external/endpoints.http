@@ -1,0 +1,29 @@
+GET http://localhost:8080/employees/17
+
+###
+GET http://localhost:8080/employees
+
+###
+DELETE http://localhost:8080/employees/13
+
+###
+POST http://localhost:8080/employees
+Content-Type: application/json
+
+{
+    "firstName": "Luci",
+    "lastName": "Donnel",
+    "departmentId": 5,
+    "jobTitle": "dev",
+    "gender": "male",
+    "dateOfBirth": "2002-08-12"
+}
+
+###
+PUT http://localhost:8080/employees/5
+Content-Type: application/json
+
+{
+    "departmentId": 8,
+    "jobTitle": "dev"
+}
