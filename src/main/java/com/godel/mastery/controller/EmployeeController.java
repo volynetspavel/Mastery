@@ -2,6 +2,7 @@ package com.godel.mastery.controller;
 
 import com.godel.mastery.dto.EmployeeDto;
 import com.godel.mastery.service.EmployeeService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 @Validated
+@Api(value = "Controller, which execute requests for employee entity.")
 public class EmployeeController {
 
     private final EmployeeService employeeService;

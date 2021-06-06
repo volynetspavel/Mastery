@@ -23,13 +23,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<String> handle(ResourceNotFoundException ex) {
-        log.error(ex.getMessage(), ex);
+        log.error(ex.getMessage());
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<String> handle(ValidationException ex) {
-        log.error(ex.getMessage(), ex);
+        log.error(ex.getMessage());
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
                 .map(objectError -> objectError.getDefaultMessage())
                 .collect(Collectors.toList());
 
-        log.error(ex.getMessage(), ex);
+        log.error(ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
                 .map(constraintViolation -> constraintViolation.getMessage())
                 .collect(Collectors.toList());
 
-        log.error(ex.getMessage(), ex);
+        log.error(ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
@@ -77,7 +77,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<String> handle(MethodArgumentTypeMismatchException ex) {
         String errorMessage = "Incorrect parameter of request.";
-        log.error(ex.getMessage(), ex);
+        log.error(ex.getMessage());
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handle(HttpMessageNotReadableException ex) {
-        log.error(ex.getMessage(), ex);
+        log.error(ex.getMessage());
         return new ResponseEntity<>(ex.getRootCause().getMessage(), HttpStatus.BAD_REQUEST);
     }
 

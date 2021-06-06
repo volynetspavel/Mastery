@@ -1,0 +1,77 @@
+GET http://localhost:8085/employees/2
+
+###
+GET http://localhost:8085/employees/-5
+
+###
+GET http://localhost:8085/employees/17
+
+#Swagger
+###
+GET http://localhost:8085/swagger-ui/
+
+
+# Actuator
+### available by default
+GET http://localhost:8085/actuator/health
+### need to add property management.endpoints.web.exposure.include=*
+GET http://localhost:8085/actuator/info
+
+
+###  provides access to the contents of the application’s log file
+GET http://localhost:8085/actuator/logfile
+###  provides access to the application’s loggers and the configuration of their levels
+GET http://localhost:8085/actuator/loggers
+
+###  provides a single logger for special group
+GET http://localhost:8085/actuator/loggers/ROOT
+###  provides a single logger for logger named com.godel
+GET http://localhost:8085/actuator/loggers/com.godel
+
+### Setting a Log Level in runtime for logger named com.godel
+POST http://localhost:8085/actuator/loggers/com.godel
+Content-Type: application/json
+
+{
+  "configuredLevel": "DEBUG"
+}
+
+### Clearing a Log Level in runtime for logger named com.godel
+POST http://localhost:8085/actuator/loggers/com.godel
+Content-Type: application/json
+
+{}
+
+###
+GET http://localhost:8085/actuator/beans
+###
+GET http://localhost:8085/actuator/metrics
+
+
+###
+GET http://localhost:8085/employees
+
+###
+DELETE http://localhost:8085/employees/13
+
+###
+POST http://localhost:8085/employees
+Content-Type: application/json
+
+{
+  "firstName": "Luci",
+  "lastName": "Donnel",
+  "departmentId": 5,
+  "jobTitle": "dev",
+  "gender": "male",
+  "dateOfBirth": "2002-08-12"
+}
+
+###
+PUT http://localhost:8085/employees/5
+Content-Type: application/json
+
+{
+  "departmentId": 8,
+  "jobTitle": "dev"
+}
