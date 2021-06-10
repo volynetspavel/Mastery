@@ -6,7 +6,10 @@ GET http://localhost:8085/employees/-5
 ###
 GET http://localhost:8085/employees/17
 
-#Swagger
+###
+GET http://localhost:8085/employees/?firstName=Luci&lastName=Donnel
+
+### Swagger
 ###
 GET http://localhost:8085/swagger-ui/
 
@@ -73,5 +76,21 @@ Content-Type: application/json
 
 {
   "departmentId": 8,
-  "jobTitle": "dev"
+  "jobTitle": "dev",
+  "dateOfBirth": "1999-08-12"
+}
+
+###
+#Jms
+
+POST http://localhost:8085/jms
+Content-Type: application/json
+
+{
+  "firstName": "Luci",
+  "lastName": "Donnel",
+  "departmentId": 5,
+  "jobTitle": "dev",
+  "gender": "male",
+  "dateOfBirth": "2002-08-12"
 }
