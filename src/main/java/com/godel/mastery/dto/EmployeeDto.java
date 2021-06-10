@@ -2,23 +2,20 @@ package com.godel.mastery.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.godel.mastery.validation.CustomLocalDateDeserializer;
+import com.godel.mastery.annotation.MaxAge;
+import com.godel.mastery.annotation.MinAge;
+import com.godel.mastery.service.Insertable;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Class-wrapper for employee.
@@ -32,17 +29,23 @@ public class EmployeeDto {
     @ApiModelProperty(value = "Id of employee.")
     private Integer id;
     @Pattern(regexp = "[A-Za-z]+", message = "First name of employee must be according [A-Za-z]+.")
+    @NotBlank(groups = Insertable.class, message = "First name must not be blank.")
     private String firstName;
     @Pattern(regexp = "[A-Za-z \\-]+", message = "Last name of employee must be according [A-Za-z \\-].")
+    @NotBlank(groups = Insertable.class, message = "Last name must not be blank.")
     private String lastName;
     @Min(value = 1, message = "Department_Id must be greater than 1.")
+    @NotNull(groups = Insertable.class, message = "Id must not be null.")
     private Integer departmentId;
     @Pattern(regexp = "[A-Za-z \\-]+", message = "Title of title must be according [A-Za-z \\-].")
+    @NotBlank(groups = Insertable.class, message = "Title of job must not be blank.")
     private String jobTitle;
     @Pattern(regexp = "(male)|(female)", message = "Gender of employee must be male or female.")
+    @NotBlank(groups = Insertable.class, message = "Gender of employee must not be blank.")
     private String gender;
-
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @JsonDeserialize(using = CustomLocalDateDeserializer.class)
+    @MinAge(value = 18, message = "Minimum age 18 years old.")
+    @MaxAge(value = 60, message = "Maximum age 60 years old.")
+    @NotNull(groups = Insertable.class, message = "Date of birth must not be null.")
     private LocalDate dateOfBirth;
 }

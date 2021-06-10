@@ -18,4 +18,7 @@ public interface EmployeeService {
     EmployeeDto findById(Integer id);
 
     List<EmployeeDto> findAll();
+
+    EmployeeDto findByFirstNameAndLastName(String firstName, String lastName);
+
 }

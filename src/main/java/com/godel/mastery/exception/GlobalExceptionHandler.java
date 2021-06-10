@@ -33,13 +33,6 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(EmployeeValidationException.class)
-    public String handle(EmployeeValidationException ex) {
-        log.error(ex.getMessage(), ex);
-        return ex.getMessage();
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DateTimeParseException.class)
     public String handle(DateTimeParseException ex) {
         log.error(ex.getMessage(), ex);

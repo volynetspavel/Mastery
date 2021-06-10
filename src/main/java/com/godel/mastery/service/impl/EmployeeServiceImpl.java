@@ -2,7 +2,7 @@ package com.godel.mastery.service.impl;
 
 import com.godel.mastery.dao.EmployeeDao;
 import com.godel.mastery.dto.EmployeeDto;
-import com.godel.mastery.exception.ResourceNotFoundException;
+import com.godel.mastery.exception.EmployeeNotFoundException;
 import com.godel.mastery.mapper.Mapper;
 import com.godel.mastery.model.Employee;
 import com.godel.mastery.service.EmployeeService;
@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto insert(EmployeeDto newEmployee) {
         Employee employee = employeeMapper.toEntity(newEmployee);
         Employee newEmployeeFromDb = employeeDao.save(employee);
-        log.debug("Execute method insert.");
+        log.debug("New employee with id = {} was created.", newEmployeeFromDb.getEmployeeId());
         return employeeMapper.toDto(newEmployeeFromDb);
     }
 
@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto update(EmployeeDto updatedEmployeeDto) {
         Integer idUpdatedEmployee = updatedEmployeeDto.getId();
         Employee employeeFromDb = employeeDao.findById(idUpdatedEmployee)
-                .orElseThrow(() -> new ResourceNotFoundException(getResourceNotFoundMessage(idUpdatedEmployee)));
+                .orElseThrow(() -> new EmployeeNotFoundException(getResourceNotFoundMessage(idUpdatedEmployee)));
 
         String firstName = updatedEmployeeDto.getFirstName();
         if (firstName != null) {
@@ -73,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employeeFromDb.setDateOfBirth(dateOfBirth);
         }
 
-        log.debug("Execute method update.");
+        log.debug("Employee with id {} was updated.", updatedEmployeeDto.getId());
         return employeeMapper.toDto(employeeFromDb);
     }
 
@@ -81,22 +81,30 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public void delete(Integer id) {
         Employee employee = employeeDao.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(getResourceNotFoundMessage(id)));
+                .orElseThrow(() -> new EmployeeNotFoundException(getResourceNotFoundMessage(id)));
         employeeDao.delete(employee);
-        log.debug("Execute method delete.");
+        log.debug("Employee with id {} was deleted.", id);
     }
 
     @Override
     public EmployeeDto findById(Integer id) {
         Employee employee = employeeDao.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(getResourceNotFoundMessage(id)));
-        log.debug("Execute method findById.");
+                .orElseThrow(() -> new EmployeeNotFoundException(getResourceNotFoundMessage(id)));
+        log.debug("Employee with id {} was found.", id);
         return employeeMapper.toDto(employee);
     }
 
     @Override
     public List<EmployeeDto> findAll() {
-        log.debug("Execute method findAll.");
         return employeeMapper.toDtoList(employeeDao.findAll());
+    }
+
+    @Override
+    public EmployeeDto findByFirstNameAndLastName(String firstName, String lastName) {
+        Employee employee = employeeDao.findFirstByFirstNameAndLastName(firstName, lastName)
+                .orElseThrow(() -> new EmployeeNotFoundException("Requested resource not found firstName: " + firstName +
+                        ", lastName: " + lastName));
+        log.debug("Employee with firstName: {} and lastName: {} was found.", firstName, lastName);
+        return employeeMapper.toDto(employee);
     }
 }
