@@ -2,6 +2,10 @@ package com.godel.mastery.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.godel.mastery.annotation.MaxAge;
 import com.godel.mastery.annotation.MinAge;
 import com.godel.mastery.service.Insertable;
@@ -15,6 +19,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -23,7 +28,9 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDto {
+public class EmployeeDto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Null(message = "Id must be null.")
     @ApiModelProperty(value = "Id of employee.")
@@ -43,9 +50,12 @@ public class EmployeeDto {
     @Pattern(regexp = "(male)|(female)", message = "Gender of employee must be male or female.")
     @NotBlank(groups = Insertable.class, message = "Gender of employee must not be blank.")
     private String gender;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     @MinAge(value = 18, message = "Minimum age 18 years old.")
     @MaxAge(value = 60, message = "Maximum age 60 years old.")
     @NotNull(groups = Insertable.class, message = "Date of birth must not be null.")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
 }
