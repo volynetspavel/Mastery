@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="Pavel" id="2">
+        <insert tableName="employee">
+            <column name="employee_id" valueNumeric="1"/>
+            <column name="first_name" value="Jonh"/>
+            <column name="last_name" value="Smith"/>
+            <column name="department_id" valueNumeric="1"/>
+            <column name="job_title" value="developer"/>
+            <column name="gender" value="male"/>
+            <column name="date_of_birth" value="1991-04-12"/>
+        </insert>
+        <insert tableName="employee">
+            <column name="employee_id" valueNumeric="2"/>
+            <column name="first_name" value="Julia"/>
+            <column name="last_name" value="Verdaski"/>
+            <column name="department_id" valueNumeric="2"/>
+            <column name="job_title" value="teacher"/>
+            <column name="gender" value="female"/>
+            <column name="date_of_birth" value="1993-07-05"/>
+        </insert>
+        <insert tableName="employee">
+            <column name="employee_id" valueNumeric="3"/>
+            <column name="first_name" value="Fabio"/>
+            <column name="last_name" value="Capollo"/>
+            <column name="department_id" valueNumeric="1"/>
+            <column name="job_title" value="developer"/>
+            <column name="gender" value="male"/>
+            <column name="date_of_birth" value="1992-10-21"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
