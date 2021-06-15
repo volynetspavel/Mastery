@@ -9,7 +9,6 @@ import com.godel.mastery.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,7 +32,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional
     public EmployeeDto insert(EmployeeDto newEmployee) {
         Employee employee = employeeMapper.toEntity(newEmployee);
         Employee newEmployeeFromDb = employeeDao.save(employee);
@@ -42,7 +40,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional
     public EmployeeDto update(EmployeeDto updatedEmployeeDto) {
         Integer idUpdatedEmployee = updatedEmployeeDto.getId();
         Employee employeeFromDb = employeeDao.findById(idUpdatedEmployee)
@@ -78,7 +75,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional
     public void delete(Integer id) {
         Employee employee = employeeDao.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(getResourceNotFoundMessage(id)));

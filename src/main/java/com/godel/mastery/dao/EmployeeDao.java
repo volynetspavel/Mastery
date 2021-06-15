@@ -10,8 +10,6 @@ import java.util.Optional;
  */
 public interface EmployeeDao extends JpaRepository<Employee, Integer> {
 
-//    Optional<Employee> findFirstByFirstNameAndLastName(String firstName, String lastName);
-
-    Optional<Employee> findFirstByFirstNameAndLastName(String name1, String name2);
+    Optional<Employee> findFirstByFirstNameAndLastName(String firstName, String lastName);
 
 }
