@@ -8,7 +8,6 @@
 
     <changeSet author="Pavel" id="2">
         <insert tableName="employee">
-            <column name="employee_id" valueNumeric="1"/>
             <column name="first_name" value="Jonh"/>
             <column name="last_name" value="Smith"/>
             <column name="department_id" valueNumeric="1"/>
@@ -17,7 +16,6 @@
             <column name="date_of_birth" value="1991-04-12"/>
         </insert>
         <insert tableName="employee">
-            <column name="employee_id" valueNumeric="2"/>
             <column name="first_name" value="Julia"/>
             <column name="last_name" value="Verdaski"/>
             <column name="department_id" valueNumeric="2"/>
@@ -26,7 +24,6 @@
             <column name="date_of_birth" value="1993-07-05"/>
         </insert>
         <insert tableName="employee">
-            <column name="employee_id" valueNumeric="3"/>
             <column name="first_name" value="Fabio"/>
             <column name="last_name" value="Capollo"/>
             <column name="department_id" valueNumeric="1"/>

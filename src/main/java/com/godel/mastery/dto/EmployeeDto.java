@@ -2,6 +2,7 @@ package com.godel.mastery.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -9,7 +10,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.godel.mastery.annotation.MaxAge;
 import com.godel.mastery.annotation.MinAge;
 import com.godel.mastery.service.Insertable;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,7 +33,7 @@ public class EmployeeDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Null(message = "Id must be null.")
-    @ApiModelProperty(value = "Id of employee.")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer id;
     @Pattern(regexp = "[A-Za-z]+", message = "First name of employee must be according [A-Za-z]+.")
     @NotBlank(groups = Insertable.class, message = "First name must not be blank.")
